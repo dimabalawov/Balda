@@ -1,41 +1,41 @@
 #include <iostream>
 #include <chrono>
-
+using namespace std;
 
 class Time {
-public:
     int hours;
     int minutes;
     int seconds;
+public:
 
     Time(int h = 0, int m = 0, int s = 0) : hours(h), minutes(m), seconds(s) {}
 
     void display()
     {
-        std::cout << hours << ":" << minutes << ":" << seconds << std::endl;
+        cout << hours << ":" << minutes << ":" << seconds << std::endl;
     }
 };
 
-class Timer {
-private:
-    std::chrono::time_point<std::chrono::steady_clock> start_time;
-    bool is_running;
+class Timer
+{
+    chrono::time_point<chrono::steady_clock> start_time;
+    bool isRunning;
 public:
-    Timer() : is_running(false) {}
+    Timer() : isRunning(false) {}
     void start()
     {
-        start_time = std::chrono::steady_clock::now();
-        is_running = true;
+        start_time = chrono::steady_clock::now();
+        isRunning = true;
     }
     Time stop()
     {
-        auto end_time = std::chrono::steady_clock::now();
-        auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count();
+        auto end_time = chrono::steady_clock::now();
+        auto elapsed_time = chrono::duration_cast<chrono::seconds>(end_time - start_time).count();
         int hours = elapsed_time / 3600;
         int minutes = (elapsed_time % 3600) / 60;
         int seconds = elapsed_time % 60;
         Time elapsed(hours, minutes, seconds);
-        is_running = false;
+        isRunning = false;
         return elapsed;
     }
 };

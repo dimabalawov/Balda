@@ -1,8 +1,27 @@
 ﻿
 #include <iostream>
+#include <fstream>
 #include "Timer.h"
 using namespace std;
 
+string getWord()
+{
+    string word;
+    ifstream in;
+    char buff[20];
+    int random = rand() % 190;
+    ifstream file("words.txt");
+    if (file.is_open()) {
+        string s;
+        for (int i = 0; i < random; i++)
+            file >> word;
+        file.close();
+        return word;
+    }
+    else {
+        cout << "Cannot open file" << endl;
+    }
+}
 class Game
 {
     string word;
@@ -10,7 +29,7 @@ class Game
     string guessfield;
     Time elapsed;
     Timer timer;
-    unsigned short tries=6;
+    unsigned short tries = 6;
 public:
     Game() = default;
     void removeLetters(char letter)
@@ -22,23 +41,23 @@ public:
         cout << " ._____." << endl;
         cout << " | " << "    |" << endl;
         cout << " | ";
-        if (tries <=5)
+        if (tries <= 5)
             cout << "    O" << endl;
         else
             cout << endl;
         cout << " | ";
         if (tries == 4)
             cout << "    |" << endl;
-        else if(tries==3)
+        else if (tries == 3)
             cout << "   /|" << endl;
-        else if(tries<=2)
+        else if (tries <= 2)
             cout << "   /|\\" << endl;
         else
             cout << endl;
         cout << " | ";
         if (tries == 1)
             cout << "   /" << endl;
-        else if(tries==0)
+        else if (tries == 0)
             cout << "   / \\" << endl;
         else
             cout << endl;
@@ -130,9 +149,9 @@ public:
 
 int main()
 {
-    string word = "jhinn";
+    srand(time(0));
+    string word = getWord();
     Game a;
     a.startGame(word);
 
 }
-
