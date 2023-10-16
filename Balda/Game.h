@@ -93,8 +93,8 @@ public:
     void winInfo()
     {
         elapsed = timer.stop();
-        cout << "You won!!!" << endl;
         printHangman();
+        color.blue("You've won!", 1);
         cout << "Word: " << word << endl;
         cout << "Tries left: " << tries << endl;
         cout << "Time elapsed: ";
@@ -142,8 +142,10 @@ public:
         {
             elapsed = timer.stop();
             printHangman();
-            cout << "You've lost" << endl;
+            color.red("You've lost", 1);
             cout << "The word was: " << word << endl;
+            cout << "Time elapsed: ";
+            elapsed.display();
         }
     }
 };
