@@ -30,7 +30,7 @@ public:
     Time stop()
     {
         auto end_time = chrono::steady_clock::now();
-        auto elapsed_time = chrono::duration_cast<chrono::seconds>(end_time - start_time).count();
+        size_t elapsed_time = chrono::duration_cast<chrono::seconds>(end_time - start_time).count();
         int hours = elapsed_time / 3600;
         int minutes = (elapsed_time % 3600) / 60;
         int seconds = elapsed_time % 60;

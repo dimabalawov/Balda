@@ -2,6 +2,7 @@
 #include <fstream>
 #include "Timer.h"
 #include "Color.h"
+#include <iostream>
 using namespace std;
 Color color;
 class Game
@@ -79,9 +80,7 @@ public:
             }
         }
         else
-        {
             cout << "Incorrect guess" << endl;
-        }
     }
     string doGuess()
     {
@@ -101,11 +100,20 @@ public:
         elapsed.display();
 
     }
+    void loseInfo()
+    {
+        elapsed = timer.stop();
+        printHangman();
+        color.red("You've lost", 1);
+        cout << "The word was: " << word << endl;
+        cout << "Time elapsed: ";
+        elapsed.display();
+    }
     string getWord(const char* path)
     {
         string word;
         ifstream in;
-        int random = rand() % 190;
+        int random = 1+ rand() % 198;
         ifstream file(path);
         if (file.is_open()) {
             string s;
@@ -115,15 +123,12 @@ public:
             return word;
         }
         else
-        {
             cout << "Cannot open file" << endl;
-        }
     }
     void startGame(const char* path)
     {
         word = getWord(path);
         timer.start();
-        this->word = word;
         lettersleft = word;
         for (size_t i = 0; i < word.length(); i++)
         {
@@ -133,19 +138,19 @@ public:
         while (tries > 0 && lettersleft.length() > 0)
         {
             printHangman();
-            cout << guessfield << endl;
+            for (size_t i = 0; i < guessfield.length(); i++)
+            {
+                if(guessfield[i]!=' ' && guessfield[i] != '_')
+                    printf("\033[1;32m");
+                cout << guessfield[i];
+                printf("\033[0m");
+            }
+            cout << endl;
             checkGuess(doGuess());
             if (lettersleft.length() == 0)
                 winInfo();
         }
         if (tries == 0)
-        {
-            elapsed = timer.stop();
-            printHangman();
-            color.red("You've lost", 1);
-            cout << "The word was: " << word << endl;
-            cout << "Time elapsed: ";
-            elapsed.display();
-        }
+            loseInfo();
     }
 };

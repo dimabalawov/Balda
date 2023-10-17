@@ -21,5 +21,6 @@ public:
 		if (mode)
 			cout << endl;
 	}
+
 };
 
